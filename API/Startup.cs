@@ -6,10 +6,12 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Persistence;
 
 namespace API
 {
@@ -26,8 +28,14 @@ namespace API
         // Dependency injection container, once available in here they can be used in other areas
         public void ConfigureServices(IServiceCollection services)
         {
+            // Make our DataContext info accessible throuohout our entire project
+            services.AddDbContext<DataContext>(opt => {
+                opt.UseSqlite(Configuration.GetConnectionString("DefaultConnection"));
+            });
+            
             // APIs have endpoints and once they are called, our controllers will execute the business logic
             services.AddControllers();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
