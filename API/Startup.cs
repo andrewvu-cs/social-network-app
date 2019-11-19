@@ -32,7 +32,11 @@ namespace API
             services.AddDbContext<DataContext>(opt => {
                 opt.UseSqlite(Configuration.GetConnectionString("DefaultConnection"));
             });
-            
+            services.AddCors(opt => {
+                opt.AddPolicy("CorsPolicy", policy => {
+                    policy.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:3000");
+                });
+            });
             // APIs have endpoints and once they are called, our controllers will execute the business logic
             services.AddControllers();
 
@@ -53,6 +57,8 @@ namespace API
             app.UseRouting();
 
             app.UseAuthorization();
+            
+            app.UseCors("CorsPolicy");
 
             app.UseEndpoints(endpoints =>
             {
