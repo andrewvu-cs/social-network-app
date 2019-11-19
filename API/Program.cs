@@ -11,15 +11,18 @@ namespace API
 {
     public class Program
     {
+        // Where .NET looks for our Main method which executes our app
         public static void Main(string[] args)
         {
             CreateHostBuilder(args).Build().Run();
         }
 
+        // Program initialization abstraction
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
+                    // Additional configuration
                     webBuilder.UseStartup<Startup>();
                 });
     }

@@ -23,12 +23,15 @@ namespace API
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
+        // Dependency injection container, once available in here they can be used in other areas
         public void ConfigureServices(IServiceCollection services)
         {
+            // APIs have endpoints and once they are called, our controllers will execute the business logic
             services.AddControllers();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        // Add middleware, ordering is important
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
@@ -36,7 +39,8 @@ namespace API
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseHttpsRedirection();
+            // I do not want to be redirected to https when 
+            // app.UseHttpsRedirection();
 
             app.UseRouting();
 
