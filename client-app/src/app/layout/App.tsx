@@ -9,7 +9,13 @@ import { ActivityDashboard } from "../../components/activities/dashboard/Activit
 
 const App = () => {
   const [activities, setActivities] = useState<IActivity[]>([]);
+  const [selectedActivity, setSelectedActivity] = useState<IActivity | null>(
+    null
+  );
 
+  const handleSelectActivity = (id: string) => {
+    setSelectedActivity(activities.filter(a => a.id === id)[0]);
+  };
   // the 2nd param [], ensures that our effect only runs once and not every render
   // componentDiDMount equivalent
   useEffect(() => {
@@ -24,8 +30,12 @@ const App = () => {
   return (
     <Fragment>
       <NavBar />
-      <Container style={{marginTop: '7em'}}>
-        <ActivityDashboard activities={activities} />
+      <Container style={{ marginTop: "7em" }}>
+        <ActivityDashboard
+          activities={activities}
+          selectActivity={handleSelectActivity}
+          selectedActivity={selectedActivity}
+        />
       </Container>
     </Fragment>
   );
