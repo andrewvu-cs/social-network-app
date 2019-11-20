@@ -11,8 +11,11 @@ namespace API.Controllers
     // Attribute based routing
     [Route("api/[controller]")]
     [ApiController]
+    
+    // ControllerBase because our views are handled by react, remain strictly as an API
     public class ActivitiesController : ControllerBase
     {
+        // must bring in Imediator from Mediator
         private readonly IMediator mediator;
         public ActivitiesController(IMediator mediator)
         {

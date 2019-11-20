@@ -28,6 +28,7 @@ namespace Application.Activities
                 this.context = context;
             }
 
+            // request allows us to access our data within the Command class nested within Create
             public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
             {
                 var activity = new Activity
