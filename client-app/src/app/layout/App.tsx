@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Fragment } from "react";
+import React, { useState, useEffect, Fragment, SyntheticEvent } from "react";
 import { Container } from "semantic-ui-react";
 import "./styles.css";
 
@@ -14,7 +14,9 @@ const App = () => {
     null
   );
   const [editMode, setEditMode] = useState(false);
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(true);
+  const [submitting, setSubmitting] = useState(false);
+  const [target, setTarget] = useState('');
 
   const handleSelectActivity = (id: string) => {
     setSelectedActivity(activities.filter(a => a.id === id)[0]);
@@ -27,25 +29,29 @@ const App = () => {
   }
 
   const handleCreateActivity = (activity: IActivity) => {
+    setSubmitting(true);
     agent.Activities.create(activity).then(() => {
       setActivities([...activities, activity]);
       setSelectedActivity(activity);
       setEditMode(false);
-    })
+    }).then(() => setSubmitting(false))
   }
 
   const handleEditActivity = (activity: IActivity) => {
+    setSubmitting(true);
     agent.Activities.update(activity).then(() => {
       setActivities([...activities.filter(a => a.id !== activity.id), activity])
       setSelectedActivity(activity);
       setEditMode(false);
-    })
+    }).then(() => setSubmitting(false));
   }
 
-  const handleDeleteActivity = (id: string) => {
+  const handleDeleteActivity = (event: SyntheticEvent<HTMLButtonElement>,id: string) => {
+    setSubmitting(true);
+    setTarget(event.currentTarget.name);
     agent.Activities.delete(id).then(()=> {
       setActivities([...activities.filter(a => a.id !== id)])
-    })
+    }).then(() => setSubmitting(false));
   }
 
   // the 2nd param [], ensures that our effect only runs once and not every render
@@ -79,6 +85,8 @@ const App = () => {
           createActivity={handleCreateActivity}
           editActivity={handleEditActivity}
           deleteActivity={handleDeleteActivity}
+          submitting={submitting}
+          target={target}
         />
       </Container>
     </Fragment>
