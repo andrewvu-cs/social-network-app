@@ -1,5 +1,5 @@
 import React, { useState, useEffect, Fragment } from "react";
-import { Header, Icon, List, Container } from "semantic-ui-react";
+import { Container } from "semantic-ui-react";
 import "./styles.css";
 import axios from "axios";
 
@@ -21,6 +21,18 @@ const App = () => {
   const handleOpenCreateForm = () => {
     setSelectedActivity(null);
     setEditMode(true);
+  }
+
+  const handleCreateActivity = (activity: IActivity) => {
+    setActivities([...activities, activity]);
+    setSelectedActivity(activity);
+    setEditMode(false);
+  }
+
+  const handleEditActivity = (activity: IActivity) => {
+    setActivities([...activities.filter(a => a.id !== activity.id), activity])
+    setSelectedActivity(activity);
+    setEditMode(false);
   }
 
   // the 2nd param [], ensures that our effect only runs once and not every render
@@ -45,6 +57,8 @@ const App = () => {
           setSelectedActivity={setSelectedActivity}
           setEditMode={setEditMode}
           editMode={editMode}
+          createActivity={handleCreateActivity}
+          editActivity={handleEditActivity}
         />
       </Container>
     </Fragment>
