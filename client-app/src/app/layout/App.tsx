@@ -36,6 +36,10 @@ const App = () => {
     setEditMode(false);
   }
 
+  const handleDeleteActivity = (id: string) => {
+    setActivities([...activities.filter(a => a.id !== id)])
+  }
+
   // the 2nd param [], ensures that our effect only runs once and not every render
   // componentDiDMount equivalent
   useEffect(() => {
@@ -64,6 +68,7 @@ const App = () => {
           editMode={editMode}
           createActivity={handleCreateActivity}
           editActivity={handleEditActivity}
+          deleteActivity={handleDeleteActivity}
         />
       </Container>
     </Fragment>

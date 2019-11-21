@@ -13,7 +13,7 @@ export const NavBar: React.FC<IProps> = ({ openCreateForm }) => {
           <img
             src="/assets/logo.png"
             alt="logo"
-            style={{ marginRight: "10px" }}
+            style={{ marginRight: "20px" }}
           />
           Droo Hangouts
         </Menu.Item>
@@ -21,7 +21,6 @@ export const NavBar: React.FC<IProps> = ({ openCreateForm }) => {
         <Menu.Item>
           <Button onClick={()=>openCreateForm()} positive content="Create Activity"></Button>
         </Menu.Item>
-        <Menu.Item name="friends" />
       </Container>
     </Menu>
   );
