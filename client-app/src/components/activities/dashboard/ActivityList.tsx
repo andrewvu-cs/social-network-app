@@ -1,14 +1,18 @@
-import React, { SyntheticEvent, useContext } from "react";
+import React, { useContext } from "react";
 import { Item, Button, Label, Segment } from "semantic-ui-react";
 import { observer } from "mobx-react-lite";
 
-import ActivityStore from '../../../app/stores/activityStore';
-import { IActivity } from "../../../app/models/activity";
-
+import ActivityStore from "../../../app/stores/activityStore";
 
 export const ActivityList: React.FC = () => {
   const activityStore = useContext(ActivityStore);
-  const {activitiesByDate, selectActivity, deleteActivity, submitting, target} = activityStore;
+  const {
+    activitiesByDate,
+    selectActivity,
+    deleteActivity,
+    submitting,
+    target
+  } = activityStore;
   return (
     <Segment clearing>
       <Item.Group divided>
@@ -30,10 +34,10 @@ export const ActivityList: React.FC = () => {
                   content="View"
                   color="blue"
                 />
-                  <Button
+                <Button
                   name={activity.id}
                   loading={target === activity.id && submitting}
-                  onClick={(e) => deleteActivity(e, activity.id)}
+                  onClick={e => deleteActivity(e, activity.id)}
                   floated="right"
                   content="Delete"
                   color="red"
