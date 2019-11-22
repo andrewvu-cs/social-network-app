@@ -8,26 +8,16 @@ import ActivityDetails  from "../details/ActivityDetails";
 import { ActivityForm } from "../form/ActivityForm";
 import ActivityStore from '../../../app/stores/activityStore';
 
-interface IProps {
-  deleteActivity: (e: SyntheticEvent<HTMLButtonElement>,id: string) => void;
-  submitting: boolean;
-  target: string;
-}
 
-const ActivityDashboard: React.FC<IProps> = ({
-  deleteActivity,
-  submitting,
-  target
-}) => {
+
+const ActivityDashboard: React.FC = () => {
   const activityStore = useContext(ActivityStore);
   const {editMode, selectedActivity} = activityStore;
   return (
     <Grid>
       <Grid.Column width={10}>
         <ActivityList
-          deleteActivity={deleteActivity}
-          submitting={submitting}
-          target={target}
+    
         ></ActivityList>
       </Grid.Column>
       <Grid.Column width={6}>
