@@ -1,7 +1,6 @@
 import React from 'react'
 import { Segment, Grid, Icon } from 'semantic-ui-react'
 import { IActivity } from '../../../app/models/activity'
-import activityStore from '../../../app/stores/activityStore'
 
 const ActivityDetailsInfo : React.FC<{activity: IActivity}>= ({activity}) => {
     return (
