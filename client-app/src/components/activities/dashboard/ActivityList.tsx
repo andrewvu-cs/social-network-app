@@ -9,7 +9,6 @@ export const ActivityList: React.FC = () => {
   const activityStore = useContext(ActivityStore);
   const {
     activitiesByDate,
-    selectActivity,
     deleteActivity,
     submitting,
     target
