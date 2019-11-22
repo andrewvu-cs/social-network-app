@@ -13,6 +13,7 @@ import { LoadingComponent } from "./LoadingComponent";
 import ActivityStore from "../stores/activityStore";
 import HomePage from "../../components/home/HomePage";
 import ActivityForm from "../../components/activities/form/ActivityForm";
+import ActivityDetails from "../../components/activities/details/ActivityDetails";
 
 const App = () => {
   const activityStore = useContext(ActivityStore);
@@ -31,7 +32,8 @@ const App = () => {
       <NavBar />
       <Container style={{ marginTop: "7em" }}>
         <Route exact path='/' component={HomePage}></Route>
-        <Route path='/activities' component={ActivityDashboard}></Route>
+        <Route exact path='/activities' component={ActivityDashboard}></Route>
+        <Route path='/activities/:id' component={ActivityDetails}></Route>
         <Route path='/createActivity' component={ActivityForm}></Route>
       </Container>
     </Fragment>
