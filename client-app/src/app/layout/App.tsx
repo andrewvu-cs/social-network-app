@@ -1,10 +1,6 @@
-import React, {
-  useEffect,
-  Fragment,
-  useContext
-} from "react";
+import React, { useEffect, Fragment, useContext } from "react";
 import { observer } from "mobx-react-lite";
-import { Route } from "react-router-dom";
+import { Route, withRouter, RouteComponentProps } from "react-router-dom";
 import { Container } from "semantic-ui-react";
 import "./styles.css";
 import NavBar from "../../components/NavBar";
@@ -15,7 +11,7 @@ import HomePage from "../../components/home/HomePage";
 import ActivityForm from "../../components/activities/form/ActivityForm";
 import ActivityDetails from "../../components/activities/details/ActivityDetails";
 
-const App = () => {
+const App: React.FC<RouteComponentProps> = ({ location }) => {
   const activityStore = useContext(ActivityStore);
 
   // the 2nd param [], ensures that our effect only runs once and not every render
@@ -29,15 +25,31 @@ const App = () => {
 
   return (
     <Fragment>
-      <NavBar />
-      <Container style={{ marginTop: "7em" }}>
-        <Route exact path='/' component={HomePage}></Route>
-        <Route exact path='/activities' component={ActivityDashboard}></Route>
-        <Route path='/activities/:id' component={ActivityDetails}></Route>
-        <Route path={['/createActivity', '/manage/:id']} component={ActivityForm}></Route>
-      </Container>
+      <Route exact path="/" component={HomePage}></Route>
+      {/* If we have anything else after the initial then render everything else */}
+      <Route
+        path={"/(.+)"}
+        render={() => (
+          <Fragment>
+            <NavBar />
+            <Container style={{ marginTop: "7em" }}>
+              <Route
+                exact
+                path="/activities"
+                component={ActivityDashboard}
+              ></Route>
+              <Route path="/activities/:id" component={ActivityDetails}></Route>
+              <Route
+                key={location.key}
+                path={["/createActivity", "/manage/:id"]}
+                component={ActivityForm}
+              ></Route>
+            </Container>
+          </Fragment>
+        )}
+      />
     </Fragment>
   );
 };
 
-export default observer(App);
+export default withRouter(observer(App));
