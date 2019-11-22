@@ -3,15 +3,16 @@ import React, {
   Fragment,
   useContext
 } from "react";
+import { observer } from "mobx-react-lite";
+import { Route } from "react-router-dom";
 import { Container } from "semantic-ui-react";
 import "./styles.css";
-
-
 import NavBar from "../../components/NavBar";
 import ActivityDashboard from "../../components/activities/dashboard/ActivityDashboard";
 import { LoadingComponent } from "./LoadingComponent";
 import ActivityStore from "../stores/activityStore";
-import { observer } from "mobx-react-lite";
+import HomePage from "../../components/home/HomePage";
+import ActivityForm from "../../components/activities/form/ActivityForm";
 
 const App = () => {
   const activityStore = useContext(ActivityStore);
@@ -29,7 +30,9 @@ const App = () => {
     <Fragment>
       <NavBar />
       <Container style={{ marginTop: "7em" }}>
-        <ActivityDashboard />
+        <Route exact path='/' component={HomePage}></Route>
+        <Route path='/activities' component={ActivityDashboard}></Route>
+        <Route path='/createActivity' component={ActivityForm}></Route>
       </Container>
     </Fragment>
   );
